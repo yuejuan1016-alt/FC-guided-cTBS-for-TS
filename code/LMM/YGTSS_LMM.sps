@@ -1,13 +1,17 @@
-﻿* Encoding: UTF-8.
-MIXED YGTSS BY age gender distance group duration Time
+* Encoding: UTF-8.
+* Clinical linear mixed model for YGTSS.
+* Continuous covariates are specified after WITH.
+* Categorical factors are specified after BY.
+
+MIXED YGTSS BY gender group Time
+  WITH age duration
   /CRITERIA=DFMETHOD(SATTERTHWAITE) CIN(95) MXITER(100) MXSTEP(10) SCORING(1)
     SINGULAR(0.000000000001) HCONVERGE(0, ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)
-  /FIXED=age gender duration distance group Time group*Time | SSTYPE(3)
+  /FIXED=age gender duration group Time group*Time | SSTYPE(3)
   /METHOD=REML
   /PRINT=DESCRIPTIVES G  LMATRIX SOLUTION TESTCOV
   /RANDOM=INTERCEPT | SUBJECT(id) COVTYPE(VC)
   /EMMEANS=TABLES(group*Time) COMPARE(group) ADJ(BONFERRONI)
   /EMMEANS=TABLES(group*Time) COMPARE(Time) ADJ(BONFERRONI)
-  /EMMEANS=TABLES(group) COMPARE ADJ(BONFERRONI)
-  /EMMEANS=TABLES(Time) COMPARE ADJ(BONFERRONI).
-
+  /EMMEANS=TABLES(group) COMPARE(group) ADJ(BONFERRONI)
+  /EMMEANS=TABLES(Time) COMPARE(Time) ADJ(BONFERRONI).
